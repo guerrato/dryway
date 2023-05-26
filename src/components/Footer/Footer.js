@@ -42,13 +42,13 @@ export default function Footer(props) {
           xl: "start",
         }}
         mb={{ base: "20px", xl: "0px" }}>
-        &copy; {1900 + new Date().getYear()},{" "}
-        <Text as='span'>
+        GENUS&copy; {1900 + new Date().getYear()},{" "}
+        {/* <Text as='span'>
           {document.documentElement.dir === "rtl"
             ? " مصنوع من ❤️ بواسطة"
             : "Made with ❤️ by "}
-        </Text>
-        <Link href='https://www.simmmple.com' target='_blank'>
+        </Text> */}
+       {/*  <Link href='https://www.simmmple.com' target='_blank'>
           {document.documentElement.dir === "rtl"
             ? " توقيت الإبداعية"
             : "Simmmple "}
@@ -59,9 +59,9 @@ export default function Footer(props) {
         </Link>
         {document.documentElement.dir === "rtl"
           ? "للحصول على ويب أفضل"
-          : " for a better web"}
+          : " for a better web"} */}
       </Text>
-      <List display='flex'>
+     {/*  <List display='flex'>
         <ListItem
           me={{
             base: "20px",
@@ -102,7 +102,7 @@ export default function Footer(props) {
             {document.documentElement.dir === "rtl" ? "رخصة" : "License"}
           </Link>
         </ListItem>
-      </List>
+      </List> */}
     </Flex>
   );
 }
