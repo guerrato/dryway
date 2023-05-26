@@ -801,11 +801,11 @@ export default function Dashboard() {
 
       setLineChart([
         {
-          name: 'Mobile apps',
+          name: 'Mobile',
           data: Array.from({ length: 12 }, () => getRandomInt(0, 1000)),
         },
         {
-          name: 'Websites',
+          name: 'Other',
           data: Array.from({ length: 12 }, () => getRandomInt(0, 1000)),
         },
       ])
@@ -1166,12 +1166,12 @@ export default function Dashboard() {
         </Card>
       </Grid>
       <Grid templateColumns={{ sm: '1fr', lg: '1.7fr 1.3fr' }} maxW={{ sm: '100%', md: '100%' }} gap="24px" mb="24px">
-        {/* Qualidade da Rede de Comunicação */}
+        {/* QOS da Rede */}
         <Card p="28px 0px 0px 0px">
           <CardHeader mb="20px" ps="22px">
             <Flex direction="column" alignSelf="flex-start">
               <Text fontSize="lg" color="#fff" fontWeight="bold" mb="6px">
-                Qualidade da Rede de Comunicação
+                QOS da Rede
               </Text>
               <Text fontSize="md" fontWeight="medium" color="gray.400">
                 {/* <Text as="span" color="green.400" fontWeight="bold">
