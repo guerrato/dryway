@@ -63,13 +63,13 @@ function Tables() {
   return (
     <Flex direction="column" pt={{ base: '120px', md: '75px' }}>
       {/* MCP */}
-      <Card overflowX={'auto'} pb="0px" >
+      <Card overflowX={'auto'} pb="0px">
         <CardHeader p="6px 0px 22px 0px">
           <Text fontSize="lg" color="#fff" fontWeight="bold">
             Embarcações
           </Text>
         </CardHeader>
-        <CardBody >
+        <CardBody>
           <Table variant="simple" color="#fff" w="100%">
             <Thead>
               <Tr my=".8rem" ps="0px" color="gray.400">
@@ -109,7 +109,7 @@ function Tables() {
               {countriesKeys.map((key) =>
                 countries[key].ships.map((ship) => {
                   const icon = shipTypes[`type${ship.type}`].img
-                  const currentStatus = (ship.initialStatus + shipWheel) % 9
+                  const currentStatus = ship.initialStatus < 9 ? (ship.initialStatus + shipWheel) % 9 : 9
 
                   let color = 'gray.400'
 
@@ -126,17 +126,17 @@ function Tables() {
                     case 6:
                       color = 'orange'
                       break
+                    case 9:
+                    case 10:
+                      color = 'red.400'
+                      break
                     default:
                       color = 'transparent'
                   }
 
                   return (
                     <Tr>
-                      <Td
-                        minWidth={{ sm: '250px' }}
-                        ps="0px"
-                        borderBottomColor="#56577A"
-                      >
+                      <Td minWidth={{ sm: '250px' }} ps="0px" borderBottomColor="#56577A">
                         <Flex align="center" py=".8rem" minWidth="100%" flexWrap="nowrap">
                           <Box h="22px" w="100px" mr="3">
                             {icon}
@@ -154,7 +154,7 @@ function Tables() {
                       <Td borderBottomColor="#56577A">
                         <Badge
                           bg={color}
-                          color={color === 'transparent' ? 'white' : 'gray.700'}
+                          color={['transparent', 'red.400'].includes(color) ? 'white' : 'gray.700'}
                           fontSize="sm"
                           p="3px 10px"
                           borderRadius="8px"
@@ -164,91 +164,175 @@ function Tables() {
                           {shipStatus[currentStatus]}
                         </Badge>
                       </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
-                      <Td  borderBottomColor="#56577A" minW="150px">
-                        <Flex direction="column">
-                          <Text fontSize="sm" color="#fff" fontWeight="normal">
-                            {getRandomArbitrary(0, 1000).toFixed(2)}
-                          </Text>
-                          <Text fontSize="sm" color="gray.400" fontWeight="normal">
-                            {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`} 
-                          </Text>
-                        </Flex>
-                      </Td>
+                      {currentStatus === 9 ? <>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                0
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                Aux: 0
+                              </Text>
+                            </Flex>
+                          </Td>
+                        </> : (
+                        <>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                          <Td borderBottomColor="#56577A" minW="150px">
+                            <Flex direction="column">
+                              <Text fontSize="sm" color="#fff" fontWeight="normal">
+                                {getRandomArbitrary(0, 1000).toFixed(2)}
+                              </Text>
+                              <Text fontSize="sm" color="gray.400" fontWeight="normal">
+                                {`Aux: ${getRandomArbitrary(0, 1000).toFixed(2)}`}
+                              </Text>
+                            </Flex>
+                          </Td>
+                        </>
+                      )}
                     </Tr>
                   )
                 })
               )}
-              
             </Tbody>
           </Table>
         </CardBody>
