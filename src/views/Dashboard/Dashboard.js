@@ -59,7 +59,10 @@ import DashboardTableRow from 'components/Tables/DashboardTableRow'
 import TimelineRow from 'components/Tables/TimelineRow'
 import { AiFillCheckCircle } from 'react-icons/ai'
 import { BiAnchor, BiHappy } from 'react-icons/bi'
+import { TbRadarOff } from 'react-icons/tb'
 import { BsArrowRight } from 'react-icons/bs'
+import { BsSignStopFill } from 'react-icons/bs'
+import { BsBarChartLineFill } from 'react-icons/bs'
 import { IoCheckmarkDoneCircleSharp, IoEllipsisHorizontal } from 'react-icons/io5'
 // Data
 import {
@@ -116,6 +119,8 @@ export const shipStatus = [
   'Atracando',
   'Descarregando',
   'Verificação',
+  'Parado', // Tripi
+  'Perdido', // Dandis
 ]
 
 export const shipTypes = {
@@ -643,16 +648,19 @@ export const countries = {
   dandis: {
     name: 'Dandis',
     ships: [
-      { name: 'Cortacia', type: 1, product: 'grain', initialStatus: 6 },
-      { name: 'Vatun', type: 1, product: 'grain', initialStatus: 4 },
-      { name: 'Tramai', type: 3, product: 'ironOre', initialStatus: 0 },
-      { name: 'Tuli', type: 3, product: 'ironOre', initialStatus: 5 },
-      { name: 'Silvertarn', type: 1, product: 'grain', initialStatus: 2 },
-      { name: 'Talonien', type: 1, product: 'grain', initialStatus: 1 },
-      { name: 'Mecretia', type: 1, product: 'grain', initialStatus: 1 },
-      { name: 'Deneth', type: 2, product: 'other', initialStatus: 8 },
-      { name: 'Tigal', type: 2, product: 'other', initialStatus: 4 },
-      { name: 'Marlins', type: 2, product: 'other', initialStatus: 5 },
+      { name: 'Cortacia', type: 1, product: 'grain', initialStatus: 6 }, // Rota 1
+      { name: 'Vatun', type: 1, product: 'grain', initialStatus: 4 }, // Rota 1
+
+      { name: 'Tramai', type: 3, product: 'ironOre', initialStatus: 0 }, // Rota 1
+      { name: 'Tuli', type: 3, product: 'ironOre', initialStatus: 5 }, // Rota 1
+
+      { name: 'Silvertarn', type: 1, product: 'grain', initialStatus: 2 }, // Rota 2
+      { name: 'Talonien', type: 1, product: 'grain', initialStatus: 1 }, // Rota 2
+      { name: 'Mecretia', type: 1, product: 'grain', initialStatus: 1 }, // Rota 2
+
+      { name: 'Deneth', type: 2, product: 'other', initialStatus: 8 }, // Rota 2
+      { name: 'Tigal', type: 2, product: 'other', initialStatus: 4 }, // Rota 2
+      { name: 'Marlins', type: 2, product: 'other', initialStatus: 5 }, // Rota 2
     ],
   },
   'area-militar-sul': {
@@ -714,8 +722,9 @@ export const countries = {
   tripi: {
     name: 'Tripi',
     ships: [
-      { name: 'Skandalor', type: 3, product: 'containers', initialStatus: 0 },
-      { name: 'Sanaj', type: 3, product: 'containers', initialStatus: 4 },
+      { name: 'Skandalor', type: 3, product: 'containers', initialStatus: 9 }, // Rota 6
+      { name: 'Sanaj', type: 3, product: 'containers', initialStatus: 9 }, // Rota 6
+
       { name: 'Calomar', type: 2, product: 'other', initialStatus: 7 },
       { name: 'Bilger', type: 2, product: 'other', initialStatus: 3 },
       { name: 'Ithanar', type: 2, product: 'other', initialStatus: 8 },
@@ -854,14 +863,14 @@ export default function Dashboard() {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
-                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb="2px">
-                  Today's Money
+                <StatLabel fontSize="sm" color="red.400" fontWeight="bold" pb="2px">
+                  Embarcação Perdida
                 </StatLabel>
                 <Flex>
                   <StatNumber fontSize="lg" color="#fff">
-                    $53,000
+                    Perdida em Dandis
                   </StatNumber>
-                  <StatHelpText
+                  {/* <StatHelpText
                     alignSelf="flex-end"
                     justifySelf="flex-end"
                     m="0px"
@@ -870,12 +879,12 @@ export default function Dashboard() {
                     ps="3px"
                     fontSize="md"
                   >
-                    +55%
-                  </StatHelpText>
+                    +55% 
+                  </StatHelpText> */}
                 </Flex>
               </Stat>
-              <IconBox as="box" h={'45px'} w={'45px'} bg="brand.200">
-                <WalletIcon h={'24px'} w={'24px'} color="#fff" />
+              <IconBox as="box" h={'45px'} w={'45px'} bg="red.400">
+                <TbRadarOff h={'24px'} w={'24px'} color="#fff" />
               </IconBox>
             </Flex>
           </CardBody>
@@ -885,14 +894,17 @@ export default function Dashboard() {
           <CardBody>
             <Flex flexDirection="row" align="center" justify="center" w="100%">
               <Stat me="auto">
-                <StatLabel fontSize="sm" color="gray.400" fontWeight="bold" pb="2px">
-                  Today's Users
+                <StatLabel fontSize="sm" color="red.400" fontWeight="bold" pb="2px">
+                  Embarcações Paradas
                 </StatLabel>
                 <Flex>
                   <StatNumber fontSize="lg" color="#fff">
-                    2,300
+                    {countries.tripi.ships
+                      .filter((s) => s.initialStatus === 9)
+                      .map((s) => s.name)
+                      .join(', ')} em Tripi
                   </StatNumber>
-                  <StatHelpText
+                  {/*  <StatHelpText
                     alignSelf="flex-end"
                     justifySelf="flex-end"
                     m="0px"
@@ -902,11 +914,11 @@ export default function Dashboard() {
                     fontSize="md"
                   >
                     +5%
-                  </StatHelpText>
+                  </StatHelpText> */}
                 </Flex>
               </Stat>
-              <IconBox as="box" h={'45px'} w={'45px'} bg="brand.200">
-                <GlobeIcon h={'24px'} w={'24px'} color="#fff" />
+              <IconBox as="box" h={'45px'} w={'45px'} bg="red.400">
+                <BsSignStopFill h={'24px'} w={'24px'} color="#fff" />
               </IconBox>
             </Flex>
           </CardBody>
@@ -927,7 +939,7 @@ export default function Dashboard() {
                     alignSelf="flex-end"
                     justifySelf="flex-end"
                     m="0px"
-                    color="red.500"
+                    color="orange"
                     fontWeight="bold"
                     ps="3px"
                     fontSize="md"
@@ -937,7 +949,7 @@ export default function Dashboard() {
                 </Flex>
               </Stat>
               <Spacer />
-              <IconBox as="box" h={'45px'} w={'45px'} bg="red.400">
+              <IconBox as="box" h={'45px'} w={'45px'} bg="orange">
                 <WarningIcon color="#fff" />
                 {/* <DocumentIcon h={'24px'} w={'24px'} color="#fff" /> */}
               </IconBox>
@@ -954,7 +966,7 @@ export default function Dashboard() {
                 </StatLabel>
                 <Flex>
                   <StatNumber fontSize="lg" color="#fff" fontWeight="bold">
-                    $173,000
+                    $2,173,000
                   </StatNumber>
                   <StatHelpText
                     alignSelf="flex-end"
@@ -969,8 +981,8 @@ export default function Dashboard() {
                   </StatHelpText>
                 </Flex>
               </Stat>
-              <IconBox as="box" h={'45px'} w={'45px'} bg="brand.200">
-                <CartIcon h={'24px'} w={'24px'} color="#fff" />
+              <IconBox as="box" h={'45px'} w={'45px'} bg="green.400">
+                <BsBarChartLineFill h={'24px'} w={'24px'} color="#fff" />
               </IconBox>
             </Flex>
           </CardBody>
@@ -1493,7 +1505,7 @@ export default function Dashboard() {
               <Flex position="relative" direction="column" lineHeight="21px" h="492px" overflowY="auto" flex="1">
                 {(currentCountry.ships ?? []).map((ship, key) => {
                   const icon = shipTypes[`type${ship.type}`].img
-                  const currentStatus = (ship.initialStatus + shipWheel) % 9
+                  const currentStatus = ship.initialStatus < 9 ? (ship.initialStatus + shipWheel) % 9 : 9
                   let color = 'gray.400'
 
                   switch (currentStatus) {
@@ -1508,6 +1520,10 @@ export default function Dashboard() {
                     case 5:
                     case 6:
                       color = 'orange'
+                      break
+                    case 9:
+                    case 10:
+                      color = 'red.400'
                       break
                     default:
                       color = 'gray.400'
